@@ -11,12 +11,14 @@ _strLgt = string_length(_code),
 _act = 0,
 _actInf = 0;
 
+
 /*  Acciones
-    //0 = sostener variable
-    1 = declarar variable
+    A = variable
+    B = funcion
 */
 
 for (var j = 1; j <= _strLgt; j++){
+
     _ord = string_ord_at(_code, j);
     
     //A (variable)
@@ -34,6 +36,8 @@ for (var j = 1; j <= _strLgt; j++){
         j += 2;
         _strCopy = j;
         _val2 = string_copy(_code, j, _strLgt-j+1);
+        
+        //show_message("BUENOS DIAS MIS QUERIDOS COMPAÑEROS#" + string(_val1) + " : " + string(_val2))
         
         //declarar variable
         /*show_message(string_ord_at(_code, j))
@@ -111,6 +115,8 @@ for (var j = 1; j <= _strLgt; j++){
                         Im += 2;
                     }
                 }
+                //terminar trabajo
+                exit;
             break;
             case 1: //else
             
@@ -138,10 +144,10 @@ for (var j = 1; j <= _strLgt; j++){
                     Im += 2;
                 }
                 ifN--;*/
-            break;
-            /*case 2: //while
                 
-            break;*/
+                //terminar trabajo
+                exit;
+            break;
         }
     }
     

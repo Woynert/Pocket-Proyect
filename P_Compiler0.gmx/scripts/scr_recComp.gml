@@ -1,8 +1,8 @@
-///scr_recComp();
+///scr_recComp(ind);
 
 
 var 
-_code = code[argument0],
+_code = cvCode[argument0],
 _strCopy = -1,
 _strLgt = string_length(_code),
 _val1 = "",//;
@@ -214,5 +214,6 @@ for (var i = 1; i <= _strLgt; i++){
 
 
 
-cCode[argument0] = _code;
+
+cCode[array_length_1d(cCode)] = _code;
 

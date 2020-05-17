@@ -5,32 +5,30 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\spr_icons</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
-    <scripts name="debug">
-      <script>scripts\scr_drawCode.gml</script>
-    </scripts>
-    <script>scripts\scr_isLetter.gml</script>
-    <script>scripts\scr_valExists.gml</script>
-    <script>scripts\scr_recPa.gml</script>
-    <script>scripts\scr_exe.gml</script>
-    <script>scripts\scr_recComp.gml</script>
-    <script>scripts\scr_convCod.gml</script>
+    <script>scripts\scr_letter.gml</script>
+    <script>scripts\scr_drawLetter.gml</script>
+    <script>scripts\scr_click.gml</script>
+    <script>scripts\scr_writeChar.gml</script>
   </scripts>
   <fonts name="fonts">
-    <font>fonts\fnt_0</font>
+    <font>fonts\fnt_kB</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_compiler</object>
+    <object>objects\obj_keyboard</object>
+    <object>objects\obj_screen</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_play</room>
+    <room>rooms\rm_main</room>
   </rooms>
   <constants number="2">
-    <constant name="rw">room_width</constant>
     <constant name="rh">room_height</constant>
+    <constant name="rw">room_width</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

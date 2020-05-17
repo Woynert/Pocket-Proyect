@@ -112,6 +112,8 @@ repeat(2){
 //Arreglar \s
 _str = scr_fixNeg(_str);
 
+//OPERACIONES ARITMETICOS
+
 //multiplicacion
 if (string_count("*", _str) > 0){
     _str = scr_rec(_str, 3, "*"); //show_message(_str);
@@ -132,17 +134,8 @@ if (string_count("-", _str) > 0){
     _str = scr_rec(_str, 0, "-"); //show_message(_str);
 }
 
-//OPERACIONES LOGICAS
 
-//and
-if (string_count("&&", _str) > 0){
-    _str = scr_rec(_str, 4, "&&");
-}
-
-//or
-if (string_count("||", _str) > 0){
-    _str = scr_rec(_str, 5, "||");
-}
+//OPERACIONES RELACIONALES
 
 //igual
 if (string_count("=", _str) > 0){
@@ -157,6 +150,18 @@ if (string_count(">", _str) > 0){
 //menor que
 if (string_count("<", _str) > 0){
     _str = scr_rec(_str, 8, "<");
+}
+
+//OPERACIONES LOGICOS
+
+//and
+if (string_count("&&", _str) > 0){
+    _str = scr_rec(_str, 4, "&&");
+}
+
+//or
+if (string_count("||", _str) > 0){
+    _str = scr_rec(_str, 5, "||");
 }
 
 //arreglar negativo (cuidado)
