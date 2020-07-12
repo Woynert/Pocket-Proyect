@@ -12,12 +12,14 @@
     <scripts name="debug">
       <script>scripts\scr_drawCode.gml</script>
     </scripts>
-    <script>scripts\scr_isLetter.gml</script>
-    <script>scripts\scr_valExists.gml</script>
-    <script>scripts\scr_recPa.gml</script>
-    <script>scripts\scr_exe.gml</script>
-    <script>scripts\scr_recComp.gml</script>
+    <scripts name="checking">
+      <script>scripts\scr_isLetter.gml</script>
+      <script>scripts\scr_valExists.gml</script>
+    </scripts>
     <script>scripts\scr_convCod.gml</script>
+    <script>scripts\scr_recComp.gml</script>
+    <script>scripts\scr_exe.gml</script>
+    <script>scripts\scr_recPa.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_0</font>

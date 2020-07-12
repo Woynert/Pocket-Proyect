@@ -8,7 +8,7 @@ show_debug_overlay(true);
 draw_set_color(c_black);
 draw_set_font(fnt_0);
 
-//sombreado
+/*/sombreado
 draw_set_color(c_yellow);
 for(var i = 0; i < array_length_1d(code); i++){
     if (executed[i]){
@@ -19,7 +19,7 @@ for(var i = 0; i < array_length_1d(code); i++){
         draw_rectangle(10, 10+string_height("L")*(i+1), 10+string_width(code[i]), 10+string_height("L")*(i+2)-2, 0); 
         draw_set_color(c_yellow);
     }
-}
+}*/
 
 //recopilar Code
 draw_set_color(c_black);
@@ -28,19 +28,6 @@ for(var i = 0; i < array_length_1d(code); i++){
     _txt += "#"+code[i];
 }
 draw_text_ext(10, 10, _txt, 20, rw/4);
-
-/*/sombreado
-draw_set_color(c_yellow);
-for(var i = 0; i < array_length_1d(cvCode); i++){
-    if (executed[i]){
-        draw_rectangle(floor(rw/4)*1+10, 10+string_height("L")*(i+1), floor(rw/4)*1+10+string_width(cvCode[i]), 10+string_height("L")*(i+2)-2, 0); 
-    }
-    if (i = lastLineExed){
-        draw_set_color(c_red);
-        draw_rectangle(floor(rw/4)*1+10, 10+string_height("L")*(i+1), floor(rw/4)*1+10+string_width(cvCode[i]), 10+string_height("L")*(i+2)-2, 0); 
-        draw_set_color(c_yellow);
-    }
-}*/
 
 //recopilar comvertedCode
 var _txt = "";

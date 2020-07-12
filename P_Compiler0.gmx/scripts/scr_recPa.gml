@@ -1,5 +1,5 @@
 #define scr_recPa
-///scr_recPa(_str);
+///scr_recPa(_str); Buscar parentesis
 
 var
 _str = argument0;
@@ -17,7 +17,7 @@ if (_nR > 0){
         
         //start read
         for (var j = 1; j <= _strLgt; j++){
-            if string_ord_at(_str, j) = 40{ //(
+            if string_ord_at(_str, j) = 40{ //( 
                 _open = 1;
                 _opePa = j;    
             }
@@ -45,7 +45,7 @@ if (_nR > 0){
             }
             //continue;
         }
-        if (_open = 0){ //si no hay parentesis
+        if (_open = 0){ //si no quedan parentesis
             return(scr_recCap(_str));
         }
     }
@@ -58,7 +58,7 @@ else{ //si no hay parentesis
 
 
 #define scr_recCap
-///scr_recCap(_str)
+///scr_recCap(_str); Identificar operaciones
 
 var _str = argument0;
 
@@ -84,7 +84,7 @@ for (var j = 1; j <= _strLgt; j++){
         j = _strCopy +string_length(string(_val2))-1;
     }
 }
-//en este punto ya no deberian haber letras en el string
+//en este punto ya no deberian haber palabras en el codigo
 
 
 //arreglar negativos y positivos
@@ -96,6 +96,7 @@ repeat(2){
         if (_ord = _chr){
         
             _ord = string_ord_at(_str, j-1);
+            
             if (!scr_isNumber(_ord) and !(_ord = 34)){ //No es numero Ni "(34)
             
                 _str = string_delete(_str, j, 1);
@@ -121,17 +122,17 @@ if (string_count("*", _str) > 0){
 
 //division
 if (string_count("/", _str) > 0){
-    _str = scr_rec(_str, 2, "/"); //show_message(_str);
+    _str = scr_rec(_str, 2, "/"); 
 } 
 
 //suma
 if (string_count("+", _str) > 0){
-    _str = scr_rec(_str, 1, "+"); //show_message(_str);
+    _str = scr_rec(_str, 1, "+"); 
 } 
 
 //resta
 if (string_count("-", _str) > 0){
-    _str = scr_rec(_str, 0, "-"); //show_message(_str);
+    _str = scr_rec(_str, 0, "-"); 
 }
 
 
@@ -173,7 +174,7 @@ if (string_count("\", _str) > 0){
 return(_str);
 
 #define scr_rec
-///scr_rec(string, id, char)
+///scr_rec(string, id, char); Realizar la operacion
 
 var
 _str = argument0,
@@ -184,7 +185,7 @@ _sv1 = 0,
 _sv2 = 0,
 _val1 = 0,
 _val2 = 0,
-_char = argument2, //_char = "",
+_char = argument2,
 _exit = false;
 
 /*
@@ -193,6 +194,11 @@ _exit = false;
 1 = suma
 2 = division
 3 = multiplicacion
+4 = and
+5 = or
+6 = igual
+7 = mayorque
+8 = menorque
 
 */
 
@@ -202,9 +208,11 @@ if string_count(_char, _str) > 0{
     
         var _ord = string_ord_at(_str, j);
         
-        if (_ord = ord(_char)){ //operacion 
+        //encontrar operacion 
+        if (_ord = ord(_char)){ 
             
             var _isStr = (string_ord_at(_str, j -1) = 34);
+            
             //valor de la izquierda
             for (var k = 0; k <= _strLgt; k++){
             
@@ -216,7 +224,9 @@ if string_count(_char, _str) > 0{
                         _strCopy = j -k;
                     }
                 }
-                else if (j-k < 1){ //no se encontró
+                
+                //no se encontró
+                else if (j-k < 1){ 
                     _exit = true;
                     break;
                 }
@@ -285,7 +295,9 @@ if string_count(_char, _str) > 0{
             }
             
             //show_message("Valores a operar#sv1: "+string(_sv1)+"#sv2: "+string(_sv2)) //MESSAGE MESSAGE MESSAGE
+            //numerico
             if scr_isNumber(string_ord_at(_sv1, 1)){
+            
                 //arreglar negativos
                 if (string_count("\", _sv1) > 0){
                     _val1 = real(string_replace(_sv1, "\", "-"));
@@ -303,31 +315,30 @@ if string_count(_char, _str) > 0{
                 
                 //return
                 switch(_id){
-                    case 3: _val1 = string(real(_val1)*real(_val2)); break; //multiplicacion
-                    case 2: _val1 = string(real(_val1)/real(_val2)); break; //divis1on
-                    case 1: _val1 = string(real(_val1)+real(_val2)); break; //suma
-                    case 0: _val1 = string(real(_val1)-real(_val2)); break; //resta
-                    case 4: _val1 = string(real(_val1)&&real(_val2)); break; //and
-                    case 5: _val1 = string(real(_val1)||real(_val2)); break; //or
-                    case 6: _val1 = string(real(_val1)=real(_val2)); break; //igual
-                    case 7: _val1 = string(real(_val1)>real(_val2)); break; //mayorque
-                    case 8: _val1 = string(real(_val1)<real(_val2)); break; //menorque
+                    case 0: _val1 = string(real(_val1) - real(_val2)); break; //resta
+                    case 1: _val1 = string(real(_val1) + real(_val2)); break; //suma
+                    case 2: _val1 = string(real(_val1) / real(_val2)); break; //divis1on
+                    case 3: _val1 = string(real(_val1) * real(_val2)); break; //multiplicacion
+                    case 4: _val1 = string(real(_val1) && real(_val2)); break; //and
+                    case 5: _val1 = string(real(_val1) || real(_val2)); break; //or
+                    case 6: _val1 = string(real(_val1) = real(_val2)); break; //igual
+                    case 7: _val1 = string(real(_val1) > real(_val2)); break; //mayorque
+                    case 8: _val1 = string(real(_val1) < real(_val2)); break; //menorque
                 }
                 
                 //arreglar negativos
                 if string_count("-", _val1) > 0{
                     _val1 = string_replace(_val1, "-", "\");
                 } 
-                
             }
-            else{ //strings
+            
+            //strings
+            else{ 
                 
                 //arreglar comillas
                 var
                 __sv1 = string_copy(_sv1, 2, string_length(_sv1)-2),
                 __sv2 = string_copy(_sv2, 2, string_length(_sv2)-2);
-                
-                //show_message("M6#sv1: "+string(__sv1)+"#sv2: "+string(__sv2)) //MESSAGE MESSAGE MESSAGE
             
                 //return
                 switch(_id){
@@ -341,7 +352,8 @@ if string_count(_char, _str) > 0{
             //return
             _str = string_replace(_str, _sv1+_char+_sv2, _val1);
             
-            if string_count(_char, _str) > 0 and string_char_at(_str, 1) != _char{ //"-" //if (string_count(_char, _str) > 0 and _char != "-") or (_char = "-" and string_char_at(_str, 1) != "-"){ 
+            //repetir
+            if string_count(_char, _str) > 0 and string_char_at(_str, 1) != _char{ 
                 _strCopy = -1; _strLgt = string_length(_str); j = 1;
             }
             else{
@@ -356,7 +368,7 @@ _str = scr_fixNeg(_str);
 return(_str);
 
 #define scr_fixNeg
-///scr_arreglarNeg(_str);
+///scr_arreglarNeg(_str); 
 
 var 
 _s = argument0;

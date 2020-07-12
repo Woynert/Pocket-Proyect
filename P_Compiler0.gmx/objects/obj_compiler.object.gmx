@@ -29,10 +29,10 @@
 
 //codigo escrito
 var _n = 0;
-      code[_n] = 'txt = "Hello ";';
+      code[_n] = 'txt = "H ";';
 _n++; code[_n] = 'txt += "World!";';
 _n++; code[_n] = "x = 5 + 5;";
-_n++; code[_n] = 'if txt = "Hello World!"';
+_n++; code[_n] = 'if txt = "H World!"';
 _n++; code[_n] = "{";
 _n++; code[_n] = "    y = 0;";
 _n++; code[_n] = "    for(i = 1; i &lt; 5 || i = 5; i += 1)";
@@ -42,18 +42,10 @@ _n++; code[_n] = "        y += 1;";
 _n++; code[_n] = "        x = (y = -1 || y &lt; 10);";
 _n++; code[_n] = "    }";
 _n++; code[_n] = "}";
-/*_n++; code[_n] = "if x = 9.5+0.5";
+_n++; code[_n] = "else";
 _n++; code[_n] = "{";
-_n++; code[_n] = "    if 2 &gt; 3";
-_n++; code[_n] = "    {";
-_n++; code[_n] = "        y = 5;";
-_n++; code[_n] = "    }";
-_n++; code[_n] = "    else";
-_n++; code[_n] = "    {";
-_n++; code[_n] = "        y = 10;";
-_n++; code[_n] = "    }";
-_n++; code[_n] = "    z = 3;";
-_n++; code[_n] = "}";*/
+_n++; code[_n] = "    y = -3";
+_n++; code[_n] = "}";
 _n++; code[_n] = "";
 
 //codigo compilado
@@ -62,8 +54,6 @@ Im = 0;
 cCode[] = 0;  //compilado
 cvCode[] = 0; //convertido
 cl[0] = ""; //consola
-/*cCode[0] = "";  //compilado
-cvCode[0] = ""; //convertido*/
 
 //variables
 val[0] = -1; //value
@@ -76,7 +66,6 @@ fucNa[0] = "if"
 fucNa[1] = "else"
 fucNa[2] = "while"
 fucTot = 3;
-//show_message(array_length_1d(fucNa))
 
 //soporte
 linKeyCursor = 0;
@@ -84,8 +73,6 @@ nLinKey = 0;
 linKey[0, 0] = 0;
 linKey[0, 1] = 0;
 linKey[0, 2] = 0;
-//nLinWhi = 0;
-//linWhi[0] = 0;
 
 //debug
 executed[_n] = false;
@@ -93,33 +80,11 @@ lastLineExed = 0;
 alarm[0] = room_speed;
 start = false;
 
-
-/*for(i = 1; i &lt;= 5; i += 1){
-    show_debug_message(i);
+/*for(var opengl = 0; opengl &lt; 5; opengl++){
+    show_debug_message("Buenos dias camaradas");
 }
 
-var i = 1;
-while(i &lt;= 5){
-    show_debug_message(i);
-i++    
-}
-
-
-var i = 1-1;
-while(i &lt;= 5-1){
-i++
-    show_debug_message(i);
-}
-
-var i = 1-1;
-while(i &lt;= 5-1)
-{
-i++
-    show_debug_message(i);
-}
-
-
-game_end(); */
+show_message(opengl);*/
 </string>
           </argument>
         </arguments>
@@ -142,7 +107,7 @@ game_end(); */
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///alarma
+            <string>///Ejecución linea por linea
 </string>
           </argument>
         </arguments>
@@ -167,8 +132,23 @@ game_end(); */
             <kind>1</kind>
             <string>///Ejecutar
 
+//compilar
+if (keyboard_check_pressed(vk_f6)){ 
+
+    //convertir
+    for(Im = 0; Im &lt; array_length_1d(code); Im++){
+        scr_convCod(Im);
+    }
+
+    //compilar
+    for(var i = 0; i &lt; array_length_1d(cvCode); i++){
+        scr_recComp(i);
+    }
+    executed[array_length_1d(cCode)] = false;
+}
+
 //ejecutar
-if (keyboard_check_pressed(vk_f5)){ //(keyboard_check_pressed(vk_f5)){
+if (keyboard_check_pressed(vk_f5)){ 
 
     //limpiar variables
     valTot = 0;
@@ -183,19 +163,17 @@ if (keyboard_check_pressed(vk_f5)){ //(keyboard_check_pressed(vk_f5)){
     }
 
     //exe
-    //for(Im = 0; Im &lt; array_length_1d(code); Im++){
     Im = 0;
-    if start
+    if start{
         start = false;
-    else
+    }
+    else{
         start = true;
-        
-    //}
-    
-      
+    }
+
 }
 
-///ejecutar
+//ejecutando
 if (start and alarm[0] = -1){
 
     //Proceso
@@ -213,33 +191,12 @@ if (start and alarm[0] = -1){
     }
     
     //repasar variables
-    //show_debug_message(" ");
-    //show_debug_message("__________________________________________");
     for(var i = 0; i &lt; array_length_1d(val); i++){ //valTot
         cl[i] = string(i) + " | " + string(valId[i]) + " | " + string(val[i])+ " | " + string(valNa[i]);
-        //show_debug_message(string(i) + " | " + string(valId[i]) + " | " + string(val[i])+ "   | " + string(valNa[i]));
     }  
 }
 
-//compilar
-if (keyboard_check_pressed(vk_f6)){ 
 
-    //convertir
-    //for(var i = 0; i &lt; array_length_1d(code); i++){
-    for(Im = 0; Im &lt; array_length_1d(code); Im++){
-        scr_convCod(Im);
-        //show_debug_message(cCode[i]);
-    }
-    //executed[array_length_1d(cCode)] = false;
-
-    //compilar
-    for(var i = 0; i &lt; array_length_1d(cvCode); i++){
-    //for(Im = 0; Im &lt; array_length_1d(code); Im++){
-        scr_recComp(i);
-        //show_debug_message(cCode[i]);
-    }
-    executed[array_length_1d(cCode)] = false;
-}
 
 </string>
           </argument>

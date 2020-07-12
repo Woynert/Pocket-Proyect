@@ -1,5 +1,5 @@
 #define scr_exe
-///scr_exe(code[n]);
+///scr_exe(code[n]); Declarar variables, ejecutar funciones, ejecutar llaves
 
 var
 _code = argument0,
@@ -17,12 +17,13 @@ _actInf = 0;
     B = funcion
 */
 
-for (var j = 1; j <= _strLgt; j++){
-
-    _ord = string_ord_at(_code, j);
+//for (var j = 1; j <= _strLgt; j++){
+    var j = 1;
+    _ord = string_ord_at(_code, j); //_ord = string_ord_at(_code, j);
     
     //A (variable)
     if (_ord = 65){ 
+    
         //leer id
         j++;
         _strCopy = j;
@@ -54,12 +55,13 @@ for (var j = 1; j <= _strLgt; j++){
             show_message("Val Number: "+string(val[real(_val1)]));
         }*/
         
-        _val2 = scr_recPa(_val2);
+        
+        //declarar
         if scr_isNumber(string_ord_at(_val2, 1))
             val[real(_val1)] = real(scr_recPa(_val2));
         else 
             val[real(_val1)] = scr_recPa(_val2);
-        
+            
         //terminar trabajo
         exit;
     }
@@ -86,26 +88,12 @@ for (var j = 1; j <= _strLgt; j++){
                 if !(real(scr_recPa(_val2))){
                 
                     //hay llaves 
-                    if string_count("{", cCode[Im+1]){ 
+                    if string_ord_at(cCode[Im+1], 1) == 123{ //{123 }125
                         Im = scr_findLineKeyStt(Im+1);
-                        /*var _Im = 2, 
-                        _kc = string_count("}", cCode[Im+_Im]), 
-                        _ko = false; 
                         
-                        //encontrar la llave correspodiente
-                        while(!(_kc and !_ko)){
-                            if string_count("{", cCode[Im+_Im])
-                                _ko = true;
-                            else if _kc
-                                _ko = false;
-                                
-                            _Im ++;
-                            _kc = string_count("}", cCode[Im+_Im]);
-                        }
-                        Im += _Im;
-                        */
                         //no ejecutar el else
-                        if string_count("B1", cCode[Im+1]){
+                        //if string_count("B1", cCode[Im+1]){
+                        if string_copy(cCode[Im+1], 1, 2) == "B1"{
                             Im += 2;
                         }
                     }
@@ -120,30 +108,15 @@ for (var j = 1; j <= _strLgt; j++){
             break;
             case 1: //else
             
-                /*/hay llaves
-                if string_count("{", cCode[Im+1]){
-                    var _Im = 2, 
-                    _kc = string_count("}", cCode[Im+_Im]), 
-                    _ko = false; 
-                    
-                    //encontrar la llave correspodiente
-                    while(!(_kc and !_ko)){
-                        if string_count("{", cCode[Im+_Im])
-                            _ko = true;
-                        else if _kc
-                            _ko = false;
-                            
-                        _Im ++;
-                        _kc = string_count("}", cCode[Im+_Im]);
-                    }
-                    Im += _Im;
+                //hay llaves 
+                if string_ord_at(cCode[Im+1], 1) == 123{ //{123 }125
+                    Im = scr_findLineKeyStt(Im+1);
                 }
                 
                 //no hay llaves
                 else{ 
                     Im += 2;
                 }
-                ifN--;*/
                 
                 //terminar trabajo
                 exit;
@@ -160,7 +133,7 @@ for (var j = 1; j <= _strLgt; j++){
             }
         }
     }
-}
+//}
 
 
 #define scr_findLineKeyStt

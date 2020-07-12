@@ -1,4 +1,4 @@
-///scr_convCod(ind);
+///scr_convCod(ind); Añadir soporte para distinta sintaxis
 
 var _code = code[argument0];
 
@@ -12,16 +12,15 @@ if string_copy(__code, 1, 3) = "for"{
     var _stt = 0, _end = 0, _ord = 0, __strLgt = string_length(__code);
     for (var i = 1; i <= __strLgt; i++){
         _ord = string_ord_at(__code, i);
-        //(40 )41 ;59
         
-        if _ord = 40{
+        if _ord = 40{ //(40 )41 ;59
             _stt = i+1;
             
             //variable
             for (var j = i; j <= __strLgt; j++){
                 _ord = string_ord_at(__code, j);
-                //show_message(_ord)
-                if (_ord = 59){ 
+                
+                if (_ord = 59){ //;59
                     _end = j;
                     break;
                 }
@@ -55,8 +54,6 @@ if string_copy(__code, 1, 3) = "for"{
             //ubicar debajo de la siguiente llave {123
             for (var j = argument0; j <= array_length_1d(code); j++){
                 if string_count("{", code[j]){
-                /*_ord = string_ord_at(, 1);
-                if (_ord = 123){ */
                     cvCode[array_length_1d(cvCode)] = "{";
                     cvCode[array_length_1d(cvCode)] = string_copy(__code, _stt, _end-_stt);
                     Im = j +1;

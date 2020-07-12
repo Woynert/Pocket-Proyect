@@ -1,4 +1,4 @@
-///scr_recComp(ind);
+///scr_recComp(ind); Compilar 
 
 
 var 
