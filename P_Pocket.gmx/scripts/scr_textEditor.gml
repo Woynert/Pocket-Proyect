@@ -45,14 +45,14 @@ if mouse_check_button_pressed(mb_left){
 }
 
 #define scr_listSelecter
-///scr_listSelecter( grid, array);
+///scr_listSelecter( grid);
 
 var
 //_str = argument0,
 _gr = argument0,
 _g = 5,
 //_open = false,
-_arr = selObjArr,
+//_arr = selObjArr,
 
 //function
 _on = 0;
@@ -72,7 +72,7 @@ draw_sprite_ext(spr_menuIcons, 6, rw -_gr/2, rh -_gr/2, 1.5, 1.5, 0, c_white, 1)
 draw_rectangle(_gr +_g, rh -_gr +_g, rw -_gr -_g, rh -_g, 0);
 draw_set_font(fnt_1B);
 draw_set_color(c_black);
-draw_text(_gr +_g +4, rh -_gr +_g +4, strEdit) //texto
+draw_text(_gr +_g +4, rh -_gr +_g +4, strEditShow) //texto
 
 //lista
 if (selObjArrOpen){
@@ -80,11 +80,12 @@ if (selObjArrOpen){
         draw_set_color(c_white);
         draw_rectangle(_gr +_g, rh -_gr*(i+2) +_g, rw -_gr -_g, rh -_g -_gr*(i+1), 0);
         draw_set_color(c_black);
-        draw_text(_gr +_g +4, rh -_gr*(i+2) +_g +4, selObjArr[i]) //texto
+        draw_text(_gr +_g +4, rh -_gr*(i+2) +_g +4, selObjArrShow[i]) //texto
         
         if mouse_check_button_pressed(mb_left){
             if point_in_rectangle(mouse_x, mouse_y, _gr +_g, rh -_gr*(i+2) +_g, rw -_gr -_g, rh -_g -_gr*(i+1)){
-                strEdit = selObjArr[i];
+                strEditShow = selObjArrShow[i];
+                strEdit = selObjArrWrite[i];
                 selObjArrOpen = false;
             }
         }

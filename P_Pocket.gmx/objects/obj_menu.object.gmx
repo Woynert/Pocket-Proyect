@@ -108,14 +108,25 @@ toMove = -1;
 //interactuar Arbol
 toEdit = 0;
 strEdit = "";
+strEditShow = "";
 
 //interactuar Object
 applyObjEdit = false;
 toObjEdit = 0;
 typeObjEdit = 0; //1 caja de texto //2 lista desplegable
-selObjArr[0] = noone;
+selObjArrShow[0] = noone;
+selObjArrWrite[0] = noone;
 selObjArrMax = 0;
 selObjArrOpen = false;
+
+//eventos Object
+eventObjArr[0] = 0;
+eventObjArr[1] = 1;
+eventObjArr[2] = 2;
+eventObjArr[3] = 2;
+eventObjArr[4] = 1;
+eventObjArrMax = 5;
+
 
 
 
@@ -304,6 +315,7 @@ for(i = 0; i &lt; nTareas; i++){
     if mouse_check_button_pressed(mb_left){
         if point_in_rectangle(mouse_x, mouse_y, _xm, 40, _xm+_x2, 40+40){
             tareaSel = i;
+            scr_configVarReset();
         }
     }
     
@@ -811,7 +823,18 @@ else{
                     case 2: 
                         var _on = scr_listSelecter( 50);
                         if (_on = 1){
-                            strEdit = ""; typeObjEdit = 0;
+                            scr_configVarReset();
+                            /*strEdit = ""; strEditShow = ""; typeObjEdit = 0;
+                            //limpiar
+                            for(var i = 0; i &lt; array_length_1d(selObjArrWrite); i++){
+                                selObjArrShow[i] = noone;
+                                selObjArrWrite[i] = noone;
+                            }
+                            applyObjEdit = false;
+                            toObjEdit = 0;
+                            typeObjEdit = 0; //1 caja de texto //2 lista desplegable
+                            selObjArrMax = 0;
+                            selObjArrOpen = false;*/
                         }
                         else if (_on = 2){ 
                             //recoger strEdit para aplicarlo
@@ -832,33 +855,18 @@ else{
             
             //constantes
             var
-            _x1 = 15,
-            _x2 = rw-15,
             _sep = 12, //separador
             _anc = 20, //ancho
-            _txtYa = 1; //Text Y Add
             
             //variables
             var 
             _ym = 0,
             _n = 0; //contador
             
-            
-            _n += 1;
-            var _txt = "Name:  ",
-            _ym = 100;
-            
             //name
-            draw_set_color(c_white);
-            draw_text(_x1, _ym +_txtYa, _txt);
-            //caja de texto
-            draw_set_color(c_white);
-            draw_rectangle(_x1 + string_width(_txt), _ym, _x2, _ym +_anc, 0)
-            //texto
-            draw_set_color(c_black);
-            draw_text(_x1 +5 + string_width(_txt), _ym +_txtYa, tarea[tareaSel,0].name);
-            //action
-            if (mouse_check_button_pressed(mb_left) and point_in_rectangle(mouse_x, mouse_y, _x1 + string_width(_txt), _ym, _x2, _ym +_anc)){
+            _n += 1;
+            _ym = 100;
+            if scr_configButtons("Name:  ", tarea[tareaSel,0].name, _ym){
                 toObjEdit = _n;
                 
                 strEdit = tarea[tareaSel,0].name;
@@ -866,93 +874,88 @@ else{
             }
             if (toObjEdit = _n &amp;&amp; applyObjEdit){
                 tarea[tareaSel,0].name = strEdit;
-                applyObjEdit = false; toObjEdit = 0; strEdit = "";
+                scr_configVarReset();
             }
             
-            _n += 1;
-            _txt = "Sprite:  ";
-            _ym += _anc + _sep;
-            
             //sprite
-            draw_set_color(c_white);
-            draw_text(_x1, _ym +_txtYa, _txt);
-            //caja de texto
-            draw_set_color(c_white);
-            draw_rectangle(_x1 + string_width(_txt), _ym, _x2, _ym +_anc, 0)
-            //texto
-            draw_set_color(c_black);
-            draw_text(_x1 +5 + string_width(_txt), _ym +_txtYa, tarea[tareaSel,0].sprite);
-            //action
-            if (mouse_check_button_pressed(mb_left) and point_in_rectangle(mouse_x, mouse_y, _x1 + string_width(_txt), _ym, _x2, _ym +_anc)){
+            _n += 1;
+            _ym += _anc + _sep;
+            var _txt = "";
+            if !is_string(tarea[tareaSel,0].sprite) 
+                _txt = tarea[tareaSel,0].sprite.name;
+            else 
+                _txt = tarea[tareaSel,0].sprite;
+            
+            if scr_configButtons("Sprite:  ", _txt, _ym){
                 toObjEdit = _n;
                 
                 //limpiar
-                for(var i = 0; i &lt; array_length_1d(selObjArr); i++){
-                    selObjArr[i] = noone;
+                for(var i = 0; i &lt; array_length_1d(selObjArrWrite); i++){
+                    selObjArrShow[i] = noone;
+                    selObjArrWrite[i] = noone;
                 }
-                //asignar
+                //asignar de la carpeta sprites
+                selObjArrShow[0] = "&lt;no sprite&gt;";
+                selObjArrWrite[0] = "&lt;no sprite&gt;";
                 typeObjEdit = 2;
-                selObjArr[0] = "spr_pacman";
-                selObjArr[1] = "spr_sonic"; 
-                selObjArr[2] = "spr_marioDeluxe";
-                selObjArrMax = 3;
-            
+                for(var i = 0; i &lt; folder[0].nFiles; i++){
+                    selObjArrShow[i+1] = folder[0].file[i].name;
+                    selObjArrWrite[i+1] = folder[0].file[i];
+                }
+                selObjArrMax = folder[0].nFiles +1;
+                
+                //mostrar item a editar
                 strEdit = tarea[tareaSel,0].sprite;
+                if !is_string(tarea[tareaSel,0].sprite){
+                    strEditShow = tarea[tareaSel,0].sprite.name;
+                }
+                else strEditShow = tarea[tareaSel,0].sprite;
             }
             if (toObjEdit = _n &amp;&amp; applyObjEdit){
                 tarea[tareaSel,0].sprite = strEdit;
-                applyObjEdit = false; toObjEdit = 0; strEdit = "";
+                scr_configVarReset();
             }
             
-            _n += 1;
-            _txt = "Visible:  ";
-            _ym += _anc + _sep;
-            
             //visible
-            draw_set_color(c_white);
-            draw_text(_x1, _ym +_txtYa, _txt);
-            //caja de texto
-            draw_set_color(c_white);
-            draw_rectangle(_x1 + string_width(_txt), _ym, _x2, _ym +_anc, 0)
-            //texto
-            draw_set_color(c_black);
-            draw_text(_x1 +5 + string_width(_txt), _ym +_txtYa, tarea[tareaSel,0].visible);
-            //action
-            if (mouse_check_button_pressed(mb_left) and point_in_rectangle(mouse_x, mouse_y, _x1 + string_width(_txt), _ym, _x2, _ym +_anc)){
+            _n += 1;
+            _ym += _anc + _sep;
+            var _txt = "";
+            if tarea[tareaSel,0].visible 
+                _txt = "True";
+            else 
+                _txt = "False";
+                
+            if scr_configButtons("Visible:  ", _txt, _ym){
                 toObjEdit = _n;
                 
                 //limpiar
-                for(var i = 0; i &lt; array_length_1d(selObjArr); i++){
-                    selObjArr[i] = noone;
+                for(var i = 0; i &lt; array_length_1d(selObjArrWrite); i++){
+                    selObjArrShow[i] = noone;
+                    selObjArrWrite[i] = noone;
                 }
                 //asignar
                 typeObjEdit = 2;
-                selObjArr[0] = false;
-                selObjArr[1] = true; 
+                selObjArrShow[0] = "False";
+                selObjArrShow[1] = "True"; 
+                selObjArrWrite[0] = false;
+                selObjArrWrite[1] = true; 
                 selObjArrMax = 2;
             
                 strEdit = tarea[tareaSel,0].visible;
-            }
+                if tarea[tareaSel,0].visible 
+                    strEditShow = "True";
+                else 
+                    strEditShow = "False";
+                }
             if (toObjEdit = _n &amp;&amp; applyObjEdit){
                 tarea[tareaSel,0].visible = strEdit;
-                applyObjEdit = false; toObjEdit = 0; strEdit = "";
+                scr_configVarReset();
             }
             
-            _n += 1;
-            _txt = "Depth:  ";
-            _ym += _anc + _sep;
-            
             //depth
-            draw_set_color(c_white);
-            draw_text(_x1, _ym +_txtYa, _txt);
-            //caja de texto
-            draw_set_color(c_white);
-            draw_rectangle(_x1 + string_width(_txt), _ym, _x2, _ym +_anc, 0)
-            //texto
-            draw_set_color(c_black);
-            draw_text(_x1 +5 + string_width(_txt), _ym +_txtYa, tarea[tareaSel,0].depth);
-            //action
-            if (mouse_check_button_pressed(mb_left) and point_in_rectangle(mouse_x, mouse_y, _x1 + string_width(_txt), _ym, _x2, _ym +_anc)){
+            _n += 1;
+            _ym += _anc + _sep;
+            if scr_configButtons("Depth:  ", tarea[tareaSel,0].depth, _ym){
                 toObjEdit = _n;
                 
                 strEdit = tarea[tareaSel,0].depth;
@@ -960,9 +963,34 @@ else{
             }
             if (toObjEdit = _n &amp;&amp; applyObjEdit){
                 tarea[tareaSel,0].depth = strEdit;
-                applyObjEdit = false; toObjEdit = 0; strEdit = "";
+                scr_configVarReset();
             }
             
+            
+            //EVENTOS
+            _anc = 50;
+            var _x1 = 15, _x2 = rw-15;
+            /*/depth
+            _n += 1;
+            _ym += _anc + _sep;
+            if scr_configButtons("Depth:  ", tarea[tareaSel,0].depth, _ym){
+                toObjEdit = _n;
+                
+                strEdit = tarea[tareaSel,0].depth;
+                typeObjEdit = 1;
+            }
+            if (toObjEdit = _n &amp;&amp; applyObjEdit){
+                tarea[tareaSel,0].depth = strEdit;
+                scr_configVarReset();
+            }*/
+            
+            for(var i = 0; i &lt; eventObjArrMax; i++){
+                _ym += _anc + _sep;
+                draw_set_color(c_white);
+                draw_rectangle(_x1, _ym, _x2, _ym +_anc, 0);
+                draw_set_color(c_black);
+                draw_text(_x1, _ym, eventObjArr[i]);
+            }
             
         }break;
         
@@ -978,12 +1006,20 @@ else{
     draw_text(0, rh-40*2, "Aceptar");
     if mouse_check_button_pressed(mb_left){
         if point_in_rectangle(mouse_x, mouse_y, 0, rh-40*2, 60, rh-40){
+            
+            //restore variables (close menus)
+            switch(tarea[tareaSel,0].type){
+                case 5: //object
+                    scr_configVarReset();
+                break;
+            }
+            
             scr_tareaDelete(tareaSel);
         }
     }
 }
 
-show_debug_overlay(1);
+//show_debug_overlay(1);
 
 </string>
           </argument>

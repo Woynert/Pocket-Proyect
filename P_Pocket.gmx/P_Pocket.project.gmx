@@ -16,6 +16,10 @@
   <scripts name="scripts">
     <scripts name="Pantallas">
       <script>scripts\scr_tareaAdd.gml</script>
+      <scripts name="Objects">
+        <script>scripts\scr_configButtons.gml</script>
+        <script>scripts\scr_configEvent.gml</script>
+      </scripts>
     </scripts>
     <scripts name="Code">
       <script>scripts\scr_drawCode.gml</script>
